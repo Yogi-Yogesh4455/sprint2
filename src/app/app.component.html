@@ -1,0 +1,163 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Mall Management</h2>
+
+  <!-- Registration Form -->
+  <div class="card mb-5">
+    <div class="card-header">
+      <h4>Register New Mall</h4>
+    </div>
+    <div class="card-body">
+      <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+        <div class="mb-3">
+          <label for="name" class="form-label">Mall Name</label>
+          <input
+            id="name"
+            name="name"
+            required
+            #name="ngModel"
+            ngModel
+            type="text"
+            class="form-control"
+            placeholder="Enter mall name"
+          />
+          <div *ngIf="name.invalid && name.touched" class="text-danger">
+            Mall name is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input
+            id="location"
+            name="location"
+            required
+            #location="ngModel"
+            ngModel
+            type="text"
+            class="form-control"
+            placeholder="Enter location"
+          />
+          <div *ngIf="location.invalid && location.touched" class="text-danger">
+            Location is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="numberOfShops" class="form-label">Number of Shops</label>
+          <input
+            id="numberOfShops"
+            name="numberOfShops"
+            required
+            #numberOfShops="ngModel"
+            ngModel
+            type="number"
+            class="form-control"
+            placeholder="Enter number of shops"
+          />
+          <div *ngIf="numberOfShops.invalid && numberOfShops.touched" class="text-danger">
+            Number of shops is required.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">
+          Register Mall
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mall List -->
+  <h3 class="mb-4">Registered Malls</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Number of Shops</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mall of mallDetails">
+        <td>{{ mall.id }}</td>
+        <td>{{ mall.name }}</td>
+        <td>{{ mall.location }}</td>
+        <td>{{ mall.numberOfShops }}</td>
+        <td>
+          <button class="btn btn-primary me-2" (click)="edit(mall)" data-bs-toggle="modal" data-bs-target="#updateModal">
+            Edit
+          </button>
+          <button class="btn btn-danger" (click)="deleteMall(mall)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Update Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Update Mall</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm" (ngSubmit)="updateMall()">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Mall Name</label>
+              <input
+                id="editName"
+                name="name"
+                required
+                [(ngModel)]="mallToUpdate.name"
+                #editName="ngModel"
+                type="text"
+                class="form-control"
+              />
+              <div *ngIf="editName.invalid && editName.touched" class="text-danger">
+                Mall name is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="editLocation" class="form-label">Location</label>
+              <input
+                id="editLocation"
+                name="location"
+                required
+                [(ngModel)]="mallToUpdate.location"
+                #editLocation="ngModel"
+                type="text"
+                class="form-control"
+              />
+              <div *ngIf="editLocation.invalid && editLocation.touched" class="text-danger">
+                Location is required.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="editShops" class="form-label">Number of Shops</label>
+              <input
+                id="editShops"
+                name="numberOfShops"
+                required
+                [(ngModel)]="mallToUpdate.numberOfShops"
+                #editShops="ngModel"
+                type="number"
+                class="form-control"
+              />
+              <div *ngIf="editShops.invalid && editShops.touched" class="text-danger">
+                Number of shops is required.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid">
+              Update Mall
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
